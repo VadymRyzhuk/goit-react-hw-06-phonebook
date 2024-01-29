@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter';
 import { ContactList } from './ContactList';
@@ -74,10 +74,10 @@ export const App = () => {
     // );
   };
 
-  useEffect(() => {
-    const stringifiedContacts = JSON.stringify(contacts);
-    localStorage.setItem('contacts', stringifiedContacts);
-  }, [contacts]);
+  // useEffect(() => {
+  //   const stringifiedContacts = JSON.stringify(contacts);
+  //   localStorage.setItem('contacts', stringifiedContacts);
+  // }, [contacts]);
 
   const filteredName = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.trim().toLowerCase())
