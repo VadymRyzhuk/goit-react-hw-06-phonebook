@@ -3,12 +3,21 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter';
 import { ContactList } from './ContactList';
 import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addContact,
+  removeContact,
+  setFilter,
+} from '../redux/Contacts/contactsReducer';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(store => store.contacts.contacts);
+  const filter = useSelector(store => store.contacts.filter);
+  // const [contacts, setContacts] = useState(
+  //   JSON.parse(localStorage.getItem('contacts')) ?? []
+  // );
+  // const [filter, setFilter] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -24,7 +33,7 @@ export const App = () => {
 
   const handleFilter = event => {
     const filterValue = event.target.value;
-    setFilter(filterValue);
+    dispatch(setFilter(filterValue));
   };
 
   const onAddClick = event => {
@@ -47,7 +56,10 @@ export const App = () => {
       number,
     };
 
-    setContacts(prevState => [...prevState, newContact]);
+    dispatch(addContact(newContact));
+
+    //setContacts(prevState => [...prevState, newContact]);
+
     // this.setState(prevState => ({
     //   contacts: [...prevState.contacts, newContact],
     // }));
@@ -56,9 +68,10 @@ export const App = () => {
   };
 
   const handleDeleteContact = contactId => {
-    setContacts(prevState =>
-      prevState.filter(contact => contact.id !== contactId)
-    );
+    dispatch(removeContact(contactId));
+    // setContacts(prevState =>
+    //   prevState.filter(contact => contact.id !== contactId)
+    // );
   };
 
   useEffect(() => {
