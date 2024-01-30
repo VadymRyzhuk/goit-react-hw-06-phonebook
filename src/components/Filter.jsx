@@ -1,6 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setFilter } from '../redux/Contacts/contactsReducer';
 
-const Filter = ({ handleFilter }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
+
+  const handleFilter = event => {
+    const filterValue = event.target.value;
+    dispatch(setFilter(filterValue));
+  };
   return (
     <div>
       <p>
